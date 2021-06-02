@@ -1,6 +1,6 @@
 {
   "name": "graphql-retain-transformer",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "Prevent losing production data by enabling the retain deletion policy for your AWS Amplify API!",
   "author": "Florian Gyger <info@floriangyger.ch>",
   "license": "MIT",
