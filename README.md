@@ -50,6 +50,12 @@ type Todo @model @retain {
 }
 ```
 
+## How does it work behind the scenes?
+
+This custom directive just sets the `DeletionPolicy` of the created DynamoDB tables from the default `Delete` to `Retain`.
+
+Read more about the `DeletionPolicy` in the AWS docs: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html
+
 ## Contribute 🦸
 
 Contributions are more than welcome! I love how AWS Amplify helps us developers building great apps in a short time. That's why I'd like to give back with contributions like this. If you feel the same and would like to join me in this project it would be awesome to get in touch! 😊
