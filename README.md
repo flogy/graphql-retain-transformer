@@ -6,6 +6,22 @@
 [![npm](https://img.shields.io/npm/v/graphql-retain-transformer)](https://www.npmjs.com/package/graphql-retain-transformer)
 [![GitHub license](https://img.shields.io/github/license/flogy/graphql-retain-transformer)](https://github.com/flogy/graphql-retain-transformer/blob/master/LICENSE)
 
+## What problem does it solve?
+
+The GraphQL Retain transformer is a custom directive that you can install and use in your
+AWS Amplify API schema. It will then set the `DeletionPolicy` of the created DynamoDB
+tables from the default `Delete` to `Retain`.
+
+What this does is it will make sure that those resources and its contents are not getting
+removed during a stack deletion. The deletion process will run through successfully, but
+you can still find the old DynamoDB table in your AWS admin console.
+
+**Attention:** If you create a new DynamoDB table with the exact same name, it will then
+overwrite the retained table and its data! So creating backups are still a good thing to
+do from time to time 😉
+
+Read this blog post about this directive for more information: https://react-freelancer.ch/blog/amplify-retain-dynamodb-tables
+
 ## Installation
 
 `npm install --save graphql-retain-transformer`
