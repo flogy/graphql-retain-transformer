@@ -26,6 +26,10 @@ Read this blog post about this directive for more information: https://react-fre
 
 `npm install --save graphql-retain-transformer`
 
+For projects using the old GraphQL Transformer v1 run:
+
+`npm install --save graphql-retain-transformer@1`
+
 ## How to use
 
 ### Setup custom transformer
