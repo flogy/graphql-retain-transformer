@@ -26,6 +26,10 @@ Read this blog post about this directive for more information: https://react-fre
 
 `npm install --save graphql-retain-transformer`
 
+For projects using the old GraphQL Transformer v1 run:
+
+`npm install --save graphql-retain-transformer@1`
+
 ## How to use
 
 ### Setup custom transformer
@@ -64,7 +68,17 @@ Please feel free to create, comment and of course solve some of the issues. To g
 
 ### Development
 
-- It is important to always make sure the version of the installed `graphql` dependency matches the `graphql` version the `graphql-transformer-core` depends on.
+1. Clone this repository and open it in your code editor.
+2. Run `npm link` in the cloned project directory and `npm link graphql-retain-transformer` in your test project where you want to use it. Maybe you'll have to uninstall the previously installed dependency as installed from NPM repository.
+3. Run `npm start` in your cloned project directory. Every code change is now immediately used in your test project, so you can just modify code and test it using `amplify codegen models` or `amplify push`.
+
+**Hint:** It is important to always make sure the version of the installed `graphql` dependency matches the `graphql` version the `graphql-transformer-core` depends on.
+
+### Publish new NPM package version
+
+1. Make sure version number is updated.
+2. Run `npm publish`.
+3. Create new release in GitHub including a tag.
 
 ## License
 

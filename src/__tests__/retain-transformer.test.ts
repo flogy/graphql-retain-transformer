@@ -1,18 +1,7 @@
-import { GraphQLTransform } from "graphql-transformer-core";
-import { DynamoDBModelTransformer } from "graphql-dynamodb-transformer";
+import { GraphQLTransform } from "@aws-amplify/graphql-transformer-core";
+import { ModelTransformer } from "@aws-amplify/graphql-model-transformer";
 import { ModelResourceIDs } from "graphql-transformer-common";
 import RetainTransformer from "../index";
-
-// @ts-ignore
-import { AppSyncTransformer } from "graphql-appsync-transformer";
-
-const transformer = new GraphQLTransform({
-  transformers: [
-    new AppSyncTransformer(),
-    new DynamoDBModelTransformer(),
-    new RetainTransformer(),
-  ],
-});
 
 test("@retain directive can be used on types", () => {
   const schema = `
@@ -22,6 +11,9 @@ test("@retain directive can be used on types", () => {
       description: String
     }
   `;
+  const transformer = new GraphQLTransform({
+    transformers: [new ModelTransformer(), new RetainTransformer()],
+  });
   expect(() => transformer.transform(schema)).not.toThrow();
 });
 
@@ -33,6 +25,9 @@ test("@retain directive can not be used on fields", () => {
       description: String @retain
     }
   `;
+  const transformer = new GraphQLTransform({
+    transformers: [new ModelTransformer(), new RetainTransformer()],
+  });
   expect(() => transformer.transform(schema)).toThrowError(
     'Directive "retain" may not be used on FIELD_DEFINITION.'
   );
@@ -46,6 +41,9 @@ test("@retain directive must be used together with @model directive", () => {
         description: String
       }
     `;
+  const transformer = new GraphQLTransform({
+    transformers: [new ModelTransformer(), new RetainTransformer()],
+  });
   expect(() => transformer.transform(schema)).toThrowError(
     "Types annotated with @retain must also be annotated with @model."
   );
@@ -53,6 +51,7 @@ test("@retain directive must be used together with @model directive", () => {
 
 const getDeletionPolicyOfSchemaTable = (
   schema: string,
+  transformer: GraphQLTransform,
   schemaTypeName: string
 ) => {
   const tableName = ModelResourceIDs.ModelTableResourceID(schemaTypeName);
@@ -78,5 +77,10 @@ test("Generated CloudFormation document contains the DeletionPolicy set to Retai
       description: String
     }
   `;
-  expect(getDeletionPolicyOfSchemaTable(schema, "Todo")).toEqual("Retain");
+  const transformer = new GraphQLTransform({
+    transformers: [new ModelTransformer(), new RetainTransformer()],
+  });
+  expect(getDeletionPolicyOfSchemaTable(schema, transformer, "Todo")).toEqual(
+    "Retain"
+  );
 });
